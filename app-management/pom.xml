@@ -13,7 +13,6 @@
 
     <properties>
         <start-class>app.management.AppManagement</start-class>
-        <spring-cloud.version>Greenwich.M1</spring-cloud.version>
     </properties>
 
     <dependencies>
