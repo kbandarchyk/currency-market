@@ -10,6 +10,7 @@
     <modules>
         <module>app-management</module>
         <module>config-server</module>
+        <module>balancer</module>
     </modules>
     <packaging>pom</packaging>
 
