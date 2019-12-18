@@ -1,7 +1,7 @@
 package app.management.query.service;
 
 import app.commonlib.utils.Pagination;
-import app.management.query.dto.CurrencyDto;
+import app.management.query.dto.CurrencyQueryDto;
 import app.repositorylib.criteria.CurrencyRepoCriteria;
 import app.repositorylib.repository.CurrencyRepository;
 import app.repositorylib.repository.dto.CurrencyRepoDto;
@@ -14,15 +14,15 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 @Service
-public class CurrencyService {
+public class CurrencyQueryService {
     private final CurrencyRepository currencyRepository;
     
     @Autowired
-    public CurrencyService(final CurrencyRepository currencyRepository ) {
+    public CurrencyQueryService(final CurrencyRepository currencyRepository ) {
         this.currencyRepository = currencyRepository;
     }
     
-    public List<CurrencyDto> fetchListBy( final CurrencyRepoCriteria repoCriteria, final Pagination pagination ) {
+    public List<CurrencyQueryDto> fetchListBy(final CurrencyRepoCriteria repoCriteria, final Pagination pagination ) {
         
         return currencyRepository.fetchListBy( repoCriteria, pagination )
                                  .stream()
@@ -30,7 +30,7 @@ public class CurrencyService {
                                  .collect(toUnmodifiableList() );
     }
     
-    public Optional<CurrencyDto> fetchBy( final CurrencyRepoCriteria repoCriteria ){
+    public Optional<CurrencyQueryDto> fetchBy(final CurrencyRepoCriteria repoCriteria ){
         
         return currencyRepository.fetchBy( repoCriteria )
                                  .map( this::toDto );
@@ -45,9 +45,9 @@ public class CurrencyService {
     // Util
     ////
     
-    protected CurrencyDto toDto( final CurrencyRepoDto repoDto ) {
+    protected CurrencyQueryDto toDto(final CurrencyRepoDto repoDto ) {
         
-        return new CurrencyDto( repoDto.getId()
+        return new CurrencyQueryDto( repoDto.getId()
                               , repoDto.getName()
                               , repoDto.getCode()
                               , repoDto.getDescription() );

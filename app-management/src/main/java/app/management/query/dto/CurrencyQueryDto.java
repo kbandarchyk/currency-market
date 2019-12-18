@@ -2,14 +2,14 @@ package app.management.query.dto;
 
 import app.commonlib.utils.QueryDto;
 
-public class CurrencyDto implements QueryDto {
+public class CurrencyQueryDto implements QueryDto {
     
     private final Integer id;
     private final String name;
     private final String code;
     private final String description;
     
-    public CurrencyDto( final Integer id
+    public CurrencyQueryDto(final Integer id
                       , final String name
                       , final String code
                       , final String description ) {
