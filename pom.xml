@@ -12,6 +12,8 @@
         <module>config-server</module>
         <module>balancer</module>
         <module>admin-server</module>
+        <module>repository-lib</module>
+        <module>common-lib</module>
     </modules>
     <packaging>pom</packaging>
 
