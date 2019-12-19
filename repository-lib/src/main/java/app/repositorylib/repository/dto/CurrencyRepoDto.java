@@ -4,12 +4,12 @@ import app.repositorylib.common.RepoDto;
 
 public class CurrencyRepoDto implements RepoDto {
     
-    private final Integer id;
+    private final Long id;
     private final String name;
     private final String code;
     private final String description;
     
-    public CurrencyRepoDto( final Integer id
+    public CurrencyRepoDto( final Long id
                           , final String name
                           , final String code
                           , final String description ) {
@@ -19,7 +19,7 @@ public class CurrencyRepoDto implements RepoDto {
         this.description = description;
     }
     
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
     

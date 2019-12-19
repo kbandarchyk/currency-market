@@ -72,7 +72,7 @@ public class CurrencyFactory {
         
         return new CurrencyRepoDto( currency.getId().orElse( null )
                                   , currency.name
-                                  , currency.description
-                                  , currency.code );
+                                  , currency.code
+                                  , currency.description );
     }
 }

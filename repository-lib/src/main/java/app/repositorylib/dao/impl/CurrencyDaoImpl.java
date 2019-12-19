@@ -5,20 +5,22 @@ import app.repositorylib.common.BaseDaoImpl;
 import app.repositorylib.common.DaoSortField;
 import app.repositorylib.criteria.CurrencyRepoCriteria;
 import app.repositorylib.dao.CurrencyDao;
-import app.repositorylib.dao.tables.Currency;
+import app.repositorylib.dao.Tables;
 import app.repositorylib.dao.tables.records.CurrencyRecord;
 import app.repositorylib.exception.SortFieldMissingException;
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import static app.commonlib.utils.CollectionUtils.isNotEmptyCollection;
-import static app.repositorylib.dao.Tables.CURRENCY;
+import static app.repositorylib.dao.tables.Currency.CURRENCY;
 
 @Service
 public class CurrencyDaoImpl extends BaseDaoImpl<CurrencyRepoCriteria, CurrencyRecord> implements CurrencyDao {
@@ -26,6 +28,13 @@ public class CurrencyDaoImpl extends BaseDaoImpl<CurrencyRepoCriteria, CurrencyR
     @Autowired
     public CurrencyDaoImpl( final DSLContext dsl ) {
         super( dsl );
+    }
+    
+    @Override
+    protected List<Field<?>> insertingFields() {
+        return List.of( CURRENCY.NAME
+                      , CURRENCY.CODE
+                      , CURRENCY.DESCRIPTION );
     }
     
     @Override
@@ -43,8 +52,8 @@ public class CurrencyDaoImpl extends BaseDaoImpl<CurrencyRepoCriteria, CurrencyR
         switch ( sortFieldInput ){
             case "ID" : return Optional.of( sortDirection == SortDirection.ASC )
                                        .filter( Boolean::booleanValue )
-                                       .map( obj -> new DaoSortField( Currency.CURRENCY.ID.asc() ) )
-                                       .orElseGet( () -> new DaoSortField( Currency.CURRENCY.ID.desc() ) );
+                                       .map( obj -> new DaoSortField( CURRENCY.ID.asc() ) )
+                                       .orElseGet( () -> new DaoSortField( CURRENCY.ID.desc() ) );
             
             default: throw new SortFieldMissingException( "Unable to sort by {0} ", sortFieldInput );
         }
@@ -58,18 +67,18 @@ public class CurrencyDaoImpl extends BaseDaoImpl<CurrencyRepoCriteria, CurrencyR
                                                    , final CurrencyRepoCriteria criteria ) {
         
         if( isNotEmptyCollection( criteria.getCurrencyIds() ) ) {
-            query.addConditions( CURRENCY.ID.in( criteria.getCurrencyIds() ) );
+            query.addConditions( Tables.CURRENCY.ID.in( criteria.getCurrencyIds() ) );
         }
         
         if( criteria.getName() != null ){
-            query.addConditions( CURRENCY.NAME.containsIgnoreCase( criteria.getName() ) );
+            query.addConditions( Tables.CURRENCY.NAME.containsIgnoreCase( criteria.getName() ) );
         }
         
         return query;
     }
     
     protected Table<CurrencyRecord> getEntityName() {
-        return Currency.CURRENCY;
+        return CURRENCY;
     }
     
 }

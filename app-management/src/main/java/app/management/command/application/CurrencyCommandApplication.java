@@ -21,6 +21,7 @@ public class CurrencyCommandApplication {
     
     public void updateCurrency( final Integer currencyId
                               , final CurrencyCommandDto commandDto ){
-        currencyFactory.update( currencyFactory.constructNew( commandDto ) );
+        currencyFactory.update( currencyFactory.fetchBy( currencyId )
+                                               .updateFrom( currencyFactory.constructNew( commandDto ) ) );
     }
 }

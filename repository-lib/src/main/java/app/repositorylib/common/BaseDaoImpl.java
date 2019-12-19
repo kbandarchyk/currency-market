@@ -3,6 +3,7 @@ package app.repositorylib.common;
 import app.commonlib.utils.Pagination;
 import app.commonlib.utils.SortDirection;
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static app.repositorylib.common.DaoPaginationExtractor.extract;
+import static java.util.stream.Collectors.toList;
 
 public abstract class BaseDaoImpl<T extends RepoCriteria, V extends Record> {
     
@@ -22,6 +24,8 @@ public abstract class BaseDaoImpl<T extends RepoCriteria, V extends Record> {
     
     protected abstract Table<V> getEntityName();
     
+    protected abstract List<Field<?>> insertingFields();
+    
     protected abstract SelectQuery<Record> constructListQuery( final SelectQuery<Record> query, final T repoCriteria );
     
     protected abstract SelectQuery<Record> constructSingleQuery( final SelectQuery<Record> query, final T repoCriteria );
@@ -29,18 +33,24 @@ public abstract class BaseDaoImpl<T extends RepoCriteria, V extends Record> {
     protected abstract DaoSortField constructSortFieldMapper( final String sortFieldInput, final SortDirection sortDirection );
     
     public V create( final V record ){
+        
         return dsl.insertInto( getEntityName() )
-                  .columns( record.fields() )
-                  .values( record.valuesRow() )
+                  .columns( insertingFields() )
+                  .values( insertingFields().stream()
+                                            .map( record::get )
+                                            .collect( toList() ) )
                   .returning()
                   .fetchOne()
                   .into( getEntityName() );
+        
     }
     
     public V update( final V record ){
+        
         return dsl.insertInto( getEntityName() )
-                  .columns( record.fields() )
-                  .values( record.valuesRow() )
+                  .set( record )
+                  .onDuplicateKeyUpdate()
+                  .set( record )
                   .returning()
                   .fetchOne()
                   .into( getEntityName() );

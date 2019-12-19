@@ -4,13 +4,13 @@ import java.util.Optional;
 
 public abstract class DomainEntity {
 
-    private final Optional<Integer> id;
+    private final Optional<Long> id;
     
-    public DomainEntity( final Optional<Integer> id ) {
+    public DomainEntity( final Optional<Long> id ) {
         this.id = id;
     }
     
-    public Optional<Integer> getId() {
+    public Optional<Long> getId() {
         return id;
     }
 }

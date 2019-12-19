@@ -4,22 +4,22 @@ import app.commonlib.utils.QueryDto;
 
 public class CurrencyQueryDto implements QueryDto {
     
-    private final Integer id;
+    private final Long id;
     private final String name;
     private final String code;
     private final String description;
     
-    public CurrencyQueryDto(final Integer id
-                      , final String name
-                      , final String code
-                      , final String description ) {
+    public CurrencyQueryDto( final Long id
+                           , final String name
+                           , final String code
+                           , final String description ) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.description = description;
     }
     
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
     

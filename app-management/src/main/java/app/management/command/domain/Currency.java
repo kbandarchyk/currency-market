@@ -13,7 +13,7 @@ public class Currency extends DomainEntity {
     
     private CurrencyDomainService domainService;
     
-    public Currency( final Optional<Integer> id
+    public Currency( final Optional<Long> id
                    , final String name
                    , final String code
                    , final String description
@@ -28,6 +28,15 @@ public class Currency extends DomainEntity {
     }
     
     private void init() {
-        domainService.checkFields( name, description );
+        domainService.checkFields( name, code );
+    }
+    
+    public Currency updateFrom( final Currency newCurrency ) {
+        
+        return new Currency( getId()
+                           , newCurrency.name
+                           , newCurrency.code
+                           , newCurrency.description
+                           , domainService );
     }
 }

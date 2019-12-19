@@ -48,8 +48,8 @@ public class CurrencyQueryService {
     protected CurrencyQueryDto toDto(final CurrencyRepoDto repoDto ) {
         
         return new CurrencyQueryDto( repoDto.getId()
-                              , repoDto.getName()
-                              , repoDto.getCode()
-                              , repoDto.getDescription() );
+                                   , repoDto.getName()
+                                   , repoDto.getCode()
+                                   , repoDto.getDescription() );
     }
 }
